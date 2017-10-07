@@ -1,0 +1,79 @@
+
+1. What’s stdint.h?
+    *library of macros/presets for defining
+    1. exact-width of int
+    (e.g) int8_t = signed, 8 bits
+
+    2. min & max values of int
+    (e.g) int_least5_max = 2^(5 - 1) - 1
+    (e.g) int_least5_min = -2^(5-1) + 1
+
+    *useful for creating your own int types
+    (i.e) microsoft WORD type = uint16_t;
+
+
+2. What’s the point of using uint8_t, uint32_t, int32_t, and uint16_t in a program?
+    *Keeps your int variables' widths/values constant across mutliple hardware.
+    (e.g "int" in 16-bit vs "int" in 32-bit compilers)
+
+
+3. How many bytes is a BYTE, a DWORD, a LONG, and a WORD, respectively?
+    BYTE = uint8_t = 1B
+    DWORD = uint32_t = 4B
+    LONG = int32_t = 4B
+    WORD = uint16_t = 2B
+
+4. What (in ASCII, decimal, or hexadecimal) must the first two bytes of any BMP file be? Leading bytes used to identify file formats (with high probability) are generally called "magic numbers."
+    0x42 (66 = B)
+    0x4D (77 = M)
+    BM = Windows 3.1x, 95, NT, ... etc. bitmap file
+
+
+5. What’s the difference between bfSize and biSize?
+    bfSize = size of file (B)
+    biSize = size of struct (i.e BITMAPINFOHEADER = 40B)
+
+6. What does it mean if biHeight is negative?
+    biHeight = (-)
+    bitmap is uncompressed (top-down DIB)
+
+7. What field in BITMAPINFOHEADER specifies the BMP’s color depth (i.e., bits per pixel)?
+    biBitCount
+
+8. Why might fopen return NULL in lines 24 and 32 of copy.c?
+    .
+
+9. Why is the third argument to fread always 1 in our code?
+    *number of elements of size <size> read
+
+    fread(&bf, sizeof(BITMAPFILEHEADER), 1, inptr);
+
+    input: inptr
+    output: &bf
+    element: an element/array, WITH sizeof(BITMAPFILEHEADER)
+
+
+10. What value does line 65 of copy.c assign to padding if bi.biWidth is 3?
+    3
+
+11. What does fseek do?
+    sets cursor position.
+    cursor = <pos>, offset by <width> bytes.
+
+    int fseek(FILE *stream, long int width, int pos)
+
+        (e.g) fseek(stream, 6, SEEK_CUR)
+
+                stream:
+                offset: 6
+                SEEK_CUR: current_pos of cursor
+
+                    cur |........0x8d..     cur = k[5]
+                    k   4B       10B
+
+                    cur ........|......     cur = k[11]
+                    k   4B      10B  14B
+
+
+12. What is SEEK_CUR?
+    current position of cursor/file pointer
