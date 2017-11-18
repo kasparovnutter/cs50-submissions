@@ -1,0 +1,99 @@
+0.  What is pneumonoultramicroscopicsilicovolcanoconiosis?
+    A type of lung disease
+
+1.  According to its man page, what does getrusage do?
+    Gets process resource usage, feeds it into a rusage struct variable.
+
+    int getrusage(int <who>, struct rusage *snapshot);
+    <who> = RUSAGE_SELF (current)
+            RUSAGE_CHILDREN (current's children)
+            RUSAGE_THREAD (current's thread)
+
+    struct rusage = defined in <man getrusage>
+
+2.  Per that same man page, how many members are in a variable of type struct rusage?
+    16.
+
+3.  Why do you think we pass before and after by reference (instead of by value)
+    to calculate, even though we’re not changing their contents?
+    Easier to specify which process before/after belongs to.
+    (they must be explicitly called to the targeted process first)
+
+4.  Explain as precisely as possible, in a paragraph or more, how main goes about
+    reading words from a file. In other words, convince us that you indeed
+    understand how that function’s for loop works.
+
+A   int main(int argc, char *argv[])
+    0. load(dictionary)
+    1. FILE* fp = opens text file specified (read mode)
+                  (argv[2] if no dic provided, else argv[3])
+    2. create char <word[LENGTH + 1]> array. LENGTH is max word length.
+    3. until EOF, get a character from <fp> and store it in char <c>
+    4.
+    while (c != EOF)
+        if  c == alphabetical OR
+            (c == ' && index > 0)
+
+            Insert c into word[index]
+            index++
+                a. Stop if index > LENGTH (i.e index > 25)
+                    fgetc(fp)
+                        while c = alpha, and
+                        !EOF
+                    when c != alpha (i.e newline/spacing)
+                        index = 0
+
+        else if c == digit (i.e numeral)
+            fgetc(fp)
+                while c = alphanum (0-9, a-z, A-Z), and
+                !EOF
+            when c != alphanum (again, i.e newline/spacing)
+                index = 0
+
+        else if index > 0 (i.e if c is not alphanum && index >0, c must be end of word)
+            word[index] = '\0'
+            words++
+
+    5. (for check(), size(), and unloaded())
+    get resource usage (before process), read into rusage* before
+    run process
+    get resource usage (after process), write into rusage* after
+    calculate()
+
+    6. if ferror(fp)
+        print error message
+        unload()
+
+    7. fclose(fp)
+    8. print timings
+
+B   double calculate(const struct rusage *b, const struct rusage *a);
+    if a or b = NULL
+        return 0.0
+    else
+        return
+            [*a.ru_utime (sec + usec total)] - [*b.ru_utime (sec + usec total)]
+                +
+            [*a.ru_stime (sec + usec total)] - [*b.ru_stime (sec + usec total)]
+            /
+            1000000.0
+    (ie returns
+        total (user + system) CPU time used for process (*after - *before) [in seconds]
+
+
+5.  Why do you think we used fgetc to read each word’s characters one at a time
+    rather than use fscanf with a format string like "%s" to read
+    whole words at a time? Put another way, what problems might arise by
+    relying on fscanf alone?
+
+    if fscanf read string-by-string, the cursor may skip over EOF, crashing the program.
+    fgetc can continuously check for EOF, meaning it will always work within the file's boundary.
+
+6.  Why do you think we declared the parameters for check and load as const
+    (which means "constant")?
+    lock the *word and *dictionary variables, prevents function from making accidental edits
+
+    constant = lock
+    static = global variable defined in current source file ONLY
+    extern = global variable defined in any source file included
+
