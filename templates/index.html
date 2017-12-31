@@ -1,0 +1,49 @@
+# extends "layout.html"
+
+
+
+# block main
+<div class= "table">
+
+    <table>
+        <thead>
+        <tr>
+            <th> Name </th>
+            <th> Qty </th>
+            <th> Price </th>
+            <th> Val </th>
+        </tr>
+        </thead>
+        <tbody>
+        # if port
+            # for stock in port["stocks"].keys():
+                <tr>
+                # for item in port["stocks"][stock].keys():
+                <td> {{ port.get("stocks").get(stock).get(item) }}</td>
+                # endfor
+                </tr>
+            # endfor
+        # else
+        <tr>
+            <td colspan="4" style="text-transform: uppercase"> No portfolio </td>
+        </tr>
+        # endif
+        <tr>
+            <th> Total </th>
+            <th colspan="3">
+                # if port
+                {{ total }}
+                # else
+                NULL
+                # endif
+            </th>
+        </tr>
+        </tbody>
+
+
+
+        </table>
+
+
+    </div>
+#endblock

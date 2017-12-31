@@ -1,0 +1,48 @@
+# extends "layout.html"
+
+
+
+# block main
+<div class= "ui">
+
+    <fieldset title= "Sell" style="display: inline-block">
+
+        <form id= "Sell" method= "POST">
+            <label for="symbol">
+                Ticker:
+                <input required form="Sell" id= "0"
+                name= "symbol"
+                type="text">
+            </label>
+            <label for="qty">
+                Sell:
+            </label>
+                <input form="Sell" id= "1"
+                name= "qty"
+                type="text">
+
+            <input type="submit" form="Sell"
+            style="display: none"/>
+        </form>
+
+
+        {% with messages = get_flashed_messages(category_filter=["sell"]) %}
+            {% if messages %}
+                {% for message in messages %}
+                    <br>{{ message }}
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </fieldset>
+</div>
+
+    <div class="r">
+        {% if result %}
+        <ul>
+            {% for k,v in result.items() %}
+            <li> {{ "%s: %s"|format(k,v) }} </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+#endblock

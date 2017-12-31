@@ -1,0 +1,26 @@
+# extends "layout.html"
+# from "_formhelpers.html" import render_field
+
+# block main
+    <fieldset title= "Registration Form">
+    <legend>Register</legend>
+            <form id= "Register" method= "POST">
+                <dl style="display: inline">
+                    {{ render_field(form.username) }}
+                    {{ render_field(form.password) }}
+                    {{ render_field(form.confirm) }}
+                </dl>
+            <button type="submit" form="Register"
+            title= "Register_user">Submit</button>
+        </form>
+
+    <!-- error if user exists !-->
+        {% with messages = get_flashed_messages(category_filter=["register"]) %}
+            {% if messages %}
+                {% for message in messages %}
+                    <br>{{ message }}
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </fieldset>
+# endblock

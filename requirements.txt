@@ -1,0 +1,8 @@
+Flask
+Flask-Session
+passlib
+SQLAlchemy
+wtforms
+functools
+logging
+time

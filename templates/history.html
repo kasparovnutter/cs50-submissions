@@ -1,0 +1,39 @@
+# extends "layout.html"
+
+
+
+# block main
+<div class= "ui">
+
+    <div class="table">
+    <table>
+        <thead>
+        <tr>
+            <th> Action </th>
+            <th> Qty </th>
+            <th> Symbol </th>
+            <th> Val </th>
+            <th> Timestamp </th>
+        </tr>
+        </thead>
+        <tbody>
+        # if order != {}
+            # for row in order.keys():
+        <tr>
+                # for attr in order.get(row):
+                <td> {{ order.get(row).get(attr) }}</td>
+                # endfor
+        </tr>
+            # endfor
+        # else
+        <tr>
+            <td colspan ="5"> No orders found</td>
+        </tr>
+        # endif
+        </tbody>
+    </table>
+    </div>
+
+
+    </div>
+#endblock
