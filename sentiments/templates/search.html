@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block subtext %}
+@{{ screen_name.lstrip("@") }}
+<a href = "https://twitter.com/{{ user["screen_name"] }}" style="text-decoration:none" target="_blank">
+({{ user["id"] }})
+</a>
+<small><p> {{ user["description"] }}</p></small>
+{% endblock %}
+
+{% block body %}
+{{ color }}
+{{ plot | safe }}
+    <p>[{{ user["lang"] }}]</p>
+    {% for tweet in timeline %}
+        <p>
+        {% for word in tweet["text"] %}
+            {% if tweet["text"][word] %}
+                {% if tweet["text"][word] >= 1 %}
+                    <font color="#99ccff"><b>{{ word }}</font></b>
+                {% else %}
+                    <font color="#ffb366"><b>{{ word }}</font></b>
+                {% endif %}
+            {% else %}
+                {{ word }}
+            {% endif %}
+
+        {% endfor %}
+        </p>
+    {% endfor %}
+{% endblock %}

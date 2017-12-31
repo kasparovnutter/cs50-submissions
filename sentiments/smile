@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+
+import os
+import sys
+import tweets
+import pprint
+
+from analyzer import Analyzer
+from termcolor import colored
+
+
+def main(name=None):
+
+    twitter = tweets.Twit()
+    t = Analyzer()
+
+    result = t.analyze(name)
+    if result.get("score") > 0:
+        text = colored(":)", "green", attrs=["bold"])
+        print(text)
+    elif result.get("score") < 0:
+        text = colored(":(", "red", attrs=["bold"])
+        print(text)
+    else:
+        text = colored(":|", "yellow", attrs=["bold"])
+        print(text)
+
+
+if __name__ == "__main__":
+    if (len(sys.argv) != 2):
+        sys.exit(("Usage: ./{} [twitter name]".format(os.path.basename(__file__))))
+    main(name=sys.argv[1])
