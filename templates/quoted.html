@@ -1,0 +1,17 @@
+# extends "layout.html"
+
+
+
+# block main
+
+<div class="r">
+    {% if result %}
+    <ul>
+        {% for k,v in result.items() %}
+        <li> {{ "%s: %s"|format(k,v) }} </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <a href="{{ referlink }}">back</a>
+</div>
+#endblock

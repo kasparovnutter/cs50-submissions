@@ -1,0 +1,33 @@
+# extends "layout.html"
+
+
+
+# block main
+<div class= "ui">
+    <fieldset title= "Query" style="display: inline">
+    <legend>Quote</legend>
+            <form id= "Query" method= "GET">
+            <label for="ticker">
+                Ticker:
+            </label>
+                <input required form="Query" id= "0"
+                name= "ticker"
+                type="text">
+
+            <button type="submit" form="Query"
+            title= "Query_form">Search</button>
+        </form>
+
+    <!-- error if user exists !-->
+        {% with messages = get_flashed_messages(category_filter=["query"]) %}
+            {% if messages %}
+                {% for message in messages %}
+                    <br>{{ message }}
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </fieldset>
+
+</div>
+
+#endblock

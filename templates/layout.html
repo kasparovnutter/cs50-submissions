@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<meta></meta>
+
+<title>
+
+</title>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="static.css") }}">
+    <h1><b> {{ request.endpoint.upper() }}</b></h1>
+
+    <nav>
+        # set nav_bar = [
+        ("login"),
+        ("register"),
+        ("index"),
+        ("history"),
+        ("quote"),
+        ("buy"),
+        ("sell")
+        ]
+        # set active_page=request.endpoint|default("index")
+        <ul>
+        # for view in nav_bar
+        <li {%if view == active_page %} class = "active" {%endif%}>
+            <a href="{{ url_for(view) |default("index")}}">{{ view }}</a>
+        # endfor
+        </li>
+
+
+
+        # with s = session.get("account")
+            # if s or s.modified
+                <li class="info">
+                {{ "%s | $%.2f"|format(s.get("name"), s.get("cash")) }}
+                <a href="{{ url_for("logout") }}"><small>logout</small></a>
+                <a href="{{ url_for("password") }}"><small>change password</small></a>
+                </li>
+            # endif
+        # endwith
+        <!-- {{ session }} -->
+        </ul>
+    </nav>
+
+</head>
+
+<main>
+    {% block main %}{% endblock %}
+    {% with messages = get_flashed_messages(category_filter=["err"]) %}
+        {% if messages %}
+            {% for message in messages %}
+                <br>{{ message }}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</main>
+
+</html>

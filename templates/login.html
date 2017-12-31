@@ -1,0 +1,41 @@
+{% extends "layout.html"%}
+
+
+
+{% block main %}
+    <fieldset title= "Login Box">
+    <legend>Login</legend>
+            <form id= "Login" method= "POST">
+            <label for="username">
+                Username:
+            </label>
+                <input form="Login" id= "0"
+                name= "username"
+                type="text"
+                value="user1">
+
+            <label for="password">
+                pw:
+            </label>
+                <input form="Login" id= "1"
+                name="password"
+                type= "password"
+                value="test">
+
+            <button type="submit" form="Login"
+            title= "Login_user">Submit</button>
+        </form>
+    <a href="{{ url_for("register") }}"> <small>new user?</small></a>
+
+    <!-- error if user exists !-->
+        {% with messages = get_flashed_messages(category_filter=["login"]) %}
+            {% if messages %}
+                {% for message in messages %}
+                    <br>{{ message }}
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </fieldset>
+{% endblock %}
+
+</html>
